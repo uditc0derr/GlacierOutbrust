@@ -1,16 +1,16 @@
 document.getElementById('alert-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
-    // Get form values
+    
     const location = document.getElementById('location').value;
     const depth = document.getElementById('depth').value;
     const status = document.getElementById('status').value;
-    const date = document.getElementById('date').value;  // Get the selected date
+    const date = document.getElementById('date').value;  
 
-    // Create alert notification
+   
     const notification = document.createElement('div');
     
-    // Apply color based on the status
+    
     let borderColor, statusTextColor;
     if (status === 'safe') {
         borderColor = 'border-green-500';
@@ -23,7 +23,7 @@ document.getElementById('alert-form').addEventListener('submit', function (e) {
         statusTextColor = 'text-red-600';
     }
 
-    // Assign class for styling
+    
     notification.className = `bg-white border-l-4 ${borderColor} p-4 shadow-md rounded-lg mb-4`;
 
     notification.innerHTML = `
@@ -33,9 +33,9 @@ document.getElementById('alert-form').addEventListener('submit', function (e) {
         <p>Date: <span class="font-medium text-gray-600">${date}</span></p>  <!-- Display the selected date -->
     `;
 
-    // Append notification to the notifications section
+   
     document.getElementById('notifications').appendChild(notification);
 
-    // Reset form after submission
+    
     this.reset();
 });
