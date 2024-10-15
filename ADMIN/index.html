@@ -5,64 +5,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Glacier Outburst Detector</title> 
+    <link rel="stylesheet" href="styles.css">
+    <title>Glacier Outburst Detector</title>
 </head>
+<style>
+    .map-container {
+    position: relative;
+}
 
+.marker {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    border: 2px solid white;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+@keyframes fade-in-down {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-down {
+    animation: fade-in-down 0.3s ease-out;
+}
+</style>
 
 <body class="bg-gray-100 min-h-screen flex flex-col">
 
     <!-- Navbar -->
-    <nav class="bg-blue-700 p-4 shadow-md shadow-zinc-500">
+    <nav class="bg-gradient-to-r from-blue-600 to-purple-600 p-4 shadow-lg">
         <div class="container mx-auto flex justify-between items-center">
-            <!-- Logo -->
-            <a href="#" class="text-white text-2xl font-semibold tracking-wide">Glacier Outburst</a>
+            <!-- Logo with margin-left -->
+            <a href="#" class="text-white text-3xl font-bold tracking-tight ml-10">Glacier Outburst</a>
 
-            <!-- Menu for larger screens -->
-            <div class="hidden md:flex space-x-8 text-lg">
-                <a href="index.html" class="text-white hover:text-gray-300 transition duration-300">Home</a>
-                <a href="whether.html" class="text-white hover:text-gray-300 transition duration-300">Weather
-                    Prediction</a>
-                <a href="Alert.html" class="text-white hover:text-gray-300 transition duration-300">Alerts</a>
-                <a href="help.html" class="text-white hover:text-gray-300 transition duration-300">Help Me</a>
+           
+            <div class="hidden md:flex justify-center space-x-12 text-lg mx-10">
+                <a href="index.html" class="text-white hover:text-gray-200 transition duration-300 hover:underline">Home</a>
+                <a href="whether.html" class="text-white hover:text-gray-200 transition duration-300 hover:underline">Weather</a>
+                <a href="Alert.html" class="text-white hover:text-gray-200 transition duration-300 hover:underline">Alerts</a>
+                <a href="help.html" class="text-white hover:text-gray-200 transition duration-300 hover:underline">Help Me</a>
             </div>
 
-            <!-- Hamburger Menu for Mobile -->
-            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
-                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
+            <!-- Hamburger Menu for Mobile with margin-right -->
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none mr-10">
+                <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                 </svg>
             </button>
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-blue-600 p-4 rounded-lg mt-2">
-            <a href="index.html" class="block text-white py-2 px-4 hover:bg-blue-500 rounded">Home</a>
-            <a href="whether.html" class="block text-white py-2 px-4 hover:bg-blue-500 rounded">Weather Prediction</a>
-            <a href="Alert.html" class="block text-white py-2 px-4 hover:bg-blue-500 rounded">Alerts</a>
-            <a href="help.html" class="block text-white py-2 px-4 hover:bg-blue-500 rounded">Help Me</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-blue-700 rounded-lg mt-2">
+            <a href="index.html" class="block text-white py-2 px-4 hover:bg-blue-600 rounded transition duration-300">Home</a>
+            <a href="whether.html" class="block text-white py-2 px-4 hover:bg-blue-600 rounded transition duration-300">Weather</a>
+            <a href="Alert.html" class="block text-white py-2 px-4 hover:bg-blue-600 rounded transition duration-300">Alerts</a>
+            <a href="help.html" class="block text-white py-2 px-4 hover:bg-blue-600 rounded transition duration-300">Help Me</a>
         </div>
     </nav>
 
-    <!-- Center -->
+    <!-- Main Content -->
     <div class="container mx-auto p-6 flex gap-6">
         <!-- Map Section -->
         <div class="w-1/2">
-            <div class="bg-white rounded-lg shadow-lg p-6">
-                <h2 class="text-3xl font-semibold mb-4 text-blue-700 text-center">Map View</h2>
-                <div class="rounded-lg overflow-hidden shadow-lg">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8354345098705!2d144.95373631535868!3d-37.81720997975145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f21e375%3A0x5045675218cd6e0!2sMelbourne%20Australia!5e0!3m2!1sen!2sus!4v1632920571945!5m2!1sen!2sus"
-                        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                </div>
+            <div class="map-container relative">
+                <img src="3d model pmg.png" alt="Map" class="map" id="map">
+                <div id="marker" class="marker animate-fade-in-down" style="left: 30%; top: 15%;"></div>
             </div>
+            
         </div>
 
         <!-- Table Section -->
         <div class="w-1/2">
             <div class="bg-white rounded-lg shadow-lg p-6">
                 <h2 class="text-3xl font-semibold mb-4 text-blue-700 text-center">Lake Monitoring Status</h2>
-
                 <table class="min-w-full table-auto border-collapse border border-gray-300 shadow-sm rounded-lg">
                     <thead>
                         <tr class="bg-blue-700 text-white">
@@ -73,46 +98,33 @@
                             <th class="border border-gray-300 px-4 py-2">Status</th>
                         </tr>
                     </thead>
-                    <tbody id="table-body">
-                        <!-- Table rows will be injected here using JavaScript -->
-                    </tbody>
+                    <tbody id="table-body"></tbody>
                 </table>
 
                 <!-- Pagination controls -->
                 <div class="flex justify-between items-center mt-4">
-                    <button id="prev-btn"
-                        class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded disabled:opacity-50"
-                        disabled>Previous</button>
+                    <button id="prev-btn" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded disabled:opacity-50" disabled>Previous</button>
                     <span id="page-info" class="text-gray-700"></span>
-                    <button id="next-btn"
-                        class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">Next</button>
+                    <button id="next-btn" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">Next</button>
                 </div>
             </div>
         </div>
-
     </div>
 
-
-    <!-- Making footer -->
+    <!-- Footer -->
     <footer class="bg-blue-700 text-white py-4 mt-auto w-full">
-        <div class="container mx-auto text-center">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left space-y-2 md:space-y-0 px-4 md:px-8">
             <p>&copy; 2024 Glacier Outburst Detector. All Rights Reserved.</p>
-
+            <div class="flex space-x-6">
+                <a href="#" class="text-white hover:text-gray-300 transition duration-300">Privacy Policy</a>
+                <a href="#" class="text-white hover:text-gray-300 transition duration-300">Terms & Conditions</a>
+            </div>
         </div>
     </footer>
 
+    
+    <script src="script.js"></script>
+
 </body>
-
-
-
-<script src="index.js"></script>
-<script>
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    mobileMenuButton.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-    });
-</script>
 
 </html>
